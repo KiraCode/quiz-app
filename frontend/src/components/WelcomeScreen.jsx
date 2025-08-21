@@ -1,6 +1,9 @@
 import React from "react";
 import QuestionBubble from "../assets/question-bubble.png"
 import GreenCheckMark from "../assets/check-circle-green.svg"
+import QuizLogo from "./ui/QuizLogo";
+import Card from "./ui/Card";
+import Button from "./ui/Button";
 
 const WelcomeScreen = () => {
   return (
@@ -14,7 +17,7 @@ const WelcomeScreen = () => {
         </div>
 
         <ul className="welcome-card-list">
-          <li className="list-iten">
+          <li className="list-item">
             <img src={GreenCheckMark} alt="" />
             There are 30 Questions
           </li>
@@ -24,9 +27,9 @@ const WelcomeScreen = () => {
           </li>
         </ul>
 
-        <button className="btn large hover" size="large">
+        <Button className="btn large hover" size="large">
           I'm Ready - Start the Quiz
-        </button>
+        </Button>
       </Card>
     </section>
   );
