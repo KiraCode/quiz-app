@@ -80,4 +80,15 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { register, login };
+const quizAttempts = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const attempts = await User.findById(userId).populate("quiz_attempts");
+
+    res.status(200).json({ attempts: attempts.quiz_attempts });
+  } catch (error) {
+    console.error("Error fetching quiz attempts", error.message);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+module.exports = { register, login, quizAttempts };
