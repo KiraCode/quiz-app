@@ -72,4 +72,62 @@ const getQuestions = async (req, res) => {
   }
 };
 
-module.exports = { getQuestions };
+const validateAnswer = async (req, res) => {
+  try {
+    const { questionId, answer } = req.body;
+
+    // validate
+    if (!questionId || !answer || !answer.value) {
+      return res.status(400).json({ message: "Invalid request" });
+    }
+
+    // find the question by id
+    let question = await Question.findById(questionId);
+
+    // validate
+    if (!question) {
+      return res.status(400).json({ message: "Question doesn't exit" });
+    }
+
+    let answerStatus = false;
+    if (
+      question.answer.id === answer.id &&
+      question.answer.value === answer.value
+    ) {
+      answerStatus = true;
+    }
+
+    const updatedUserQuiz = await UserQuizModel.findOneAndUpdate(
+      {
+        "questions.question_id": questionId,
+        user_id: req.user._id,
+        quiz_status: QUIZ_STATUS_PENDING,
+      },
+      {
+        $set: {
+          "questions.$.atempted": true,
+          "questions.$.answer_status": answerStatus
+            ? ANSWER_STATUS_RIGHT
+            : ANSWER_STATUS_WRONG,
+          "questions.&.submitted_answer": answer,
+        },
+      },
+      { new: true } // to return the updated document which we are not using as of now
+    );
+
+    // update the result using instance methods
+    await updatedUserQuiz?.updateResult();
+
+    return res.status(200).json({
+      status: answerStatus ? 1 : 0,
+      message: answerStatus ? "Correct answer :)" : "Wrong answer :(",
+      submitted_answer: answer,
+      correct_answer: question.answer,
+    });
+  } catch (error) {
+    console.error("Error creating task", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { getQuestions, validateAnswer };

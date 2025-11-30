@@ -53,7 +53,7 @@ const userQuizSchema = mongoose.Schema(
 
 // instance methods
 userQuizSchema.methods.updateResult = function () {
-  let result = this.question.reduce(
+  let result = this.questions.reduce(
     function (acc, currentValue) {
       if (currentValue.answer_status === ANSWER_STATUS_RIGHT) {
         acc["correct_count"] += 1;
