@@ -3,13 +3,14 @@ const {
   UserQuiz: UserQuizModel,
   QUIZ_STATUS_PENDING,
   ANSWER_STATUS_PENDING,
+  ANSWER_STATUS_RIGHT,
+  ANSWER_STATUS_WRONG,
 } = require("../models/userQuizModel.js");
-const Question = require("../models.questionModel.js");
+const Question = require("../models/questionModel.js");
 
 const getQuestions = async (req, res) => {
   try {
     // finding incomplete quiz for the user and populate question details in one query
-
     let userQuiz = await UserQuizModel.findOne({
       user_id: req.user._id,
       quiz_status: QUIZ_STATUS_PENDING,
@@ -20,7 +21,7 @@ const getQuestions = async (req, res) => {
       // get random question from the database (without answer)
       const randomQuestions = await Question.aggregate([
         { $sample: { size: MAX_QUESTION_COUNT } },
-        { $project: { question: 1, options } },
+        { $project: { question: 1, options: 1 } },
       ]);
       //   format questions for user quiz document
       const quizQuestions = randomQuestions.map((question) => ({
@@ -55,7 +56,7 @@ const getQuestions = async (req, res) => {
           question: q.question_id.question,
           options: q.question_id.options,
           attempted: q.attempted,
-          answer_status: q.answwer_status,
+          answer_status: q.answer_status,
           submitted_answer: q.submitted_answer,
         };
       })
@@ -70,3 +71,5 @@ const getQuestions = async (req, res) => {
     res.status(400).send("Something went rong while fetching the Question");
   }
 };
+
+module.exports = { getQuestions };

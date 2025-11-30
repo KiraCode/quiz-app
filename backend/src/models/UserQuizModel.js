@@ -9,7 +9,7 @@ const ANSWER_STATUS_WRONG = "wrong";
 
 const userQuizSchema = mongoose.Schema(
   {
-    user_id: String,
+    user_id: mongoose.Schema.Types.ObjectId,
     quiz_status: {
       type: String,
       enum: [QUIZ_STATUS_PENDING, QUIZ_STATUS_COMPLETED],
@@ -68,8 +68,10 @@ userQuizSchema.methods.updateResult = function () {
   this.save();
 };
 
+const UserQuiz = mongoose.model("UserQuiz",userQuizSchema);
+
 module.exports = {
-  userQuiz,
+  UserQuiz,
   QUIZ_STATUS_COMPLETED,
   QUIZ_STATUS_PENDING,
   ANSWER_STATUS_PENDING,

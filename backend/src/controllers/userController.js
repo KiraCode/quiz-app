@@ -84,7 +84,7 @@ const quizAttempts = async (req, res) => {
   try {
     const userId = req.user._id;
     const attempts = await User.findById(userId).populate("quiz_attempts");
-
+    
     res.status(200).json({ attempts: attempts.quiz_attempts });
   } catch (error) {
     console.error("Error fetching quiz attempts", error.message);
