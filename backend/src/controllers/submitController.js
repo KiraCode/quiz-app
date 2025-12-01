@@ -1,7 +1,7 @@
 const {
   UserQuiz: UserQuizModel,
   QUIZ_STATUS_PENDING,
-  QUIZ_STATUS_COMPLETED
+  QUIZ_STATUS_COMPLETED,
 } = require("../models/userQuizModel.js");
 const Question = require("../models/questionModel.js");
 const User = require("../models/userModel.js");
@@ -27,7 +27,7 @@ const submitQuiz = async (req, res) => {
     const user = await User.findOne({ _id: req.user._id });
     user.quiz_attempts = user.quiz_attempts + 1;
     user.save();
-    userCurrentQuiz.save()
+    userCurrentQuiz.save();
 
     // create two arrays for showing what questions we selected wrong, what is there correct answer
     let incorrect_questions = [];
@@ -50,7 +50,7 @@ const submitQuiz = async (req, res) => {
       // check answers are correct or not and close the loop
       if (
         questionModel.answer.id === userQuestion.submitted_answer.id &&
-        questionModel.answer.value === userQuestion.submitted.answer.value
+        questionModel.answer.value === userQuestion.submitted_answer.value
       ) {
         correct_questions.push(_data);
       } else {
@@ -69,4 +69,54 @@ const submitQuiz = async (req, res) => {
   }
 };
 
-module.exports = { submitQuiz };
+const completedQuizQuestions = async (req, res) => {
+  try {
+    let userCurrentQuiz = await UserQuizModel.find({
+      user_id: req.user._id,
+      quiz_status: QUIZ_STATUS_COMPLETED,
+    }).sort({ createdAt: -1 });
+console.log( req.user._id);
+
+    // create two arrays for showing what questions we selected wrong, what is there correct answer
+    let incorrect_questions = [];
+    let correct_questions = [];
+
+    if (userCurrentQuiz.length === 0) {
+      return res
+        .status(500)
+        .json({ success: false, message: "No Quiz for the user found" });
+    }
+
+    // loop through all quiz questions
+    for (const userQuestion of userCurrentQuiz[0].questions) {
+      const questionModel = await Question.findById(userQuestion.question_id);
+
+      // build data object for question
+      let _data = {
+        question_id: userQuestion.question_id,
+        question: questionModel.question,
+        answer: questionModel.answer,
+        attempted: userQuestion.attempted,
+        answer_status: userQuestion.answer_status,
+        submitted_answer: userQuestion.submitted_answer,
+      };
+
+      // check answers are correct or not and close the loop
+      if (
+        questionModel.answer.id === userQuestion.submitted_answer.id &&
+        questionModel.answer.value === userQuestion.submitted_answer.value
+      ) {
+        correct_questions.push(_data);
+      } else {
+        incorrect_questions.push(_data);
+      }
+    }
+    return res.send({
+      status: true,
+      result: userCurrentQuiz[0].result,
+      incorrect_questions,
+      correct_questions,
+    });
+  } catch (error) {}
+};
+module.exports = { submitQuiz, completedQuizQuestions };
