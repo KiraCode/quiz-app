@@ -3,6 +3,7 @@ const cors = require("cors");
 const db = require("./utils/db.js");
 const userRouter = require("./routes/userRoutes.js");
 const questionRouter = require("./routes/questionRouter.js");
+const { quizRouter } = require("./routes/quizRoutes.js");
 require("dotenv").config();
 
 const app = express();
@@ -19,6 +20,7 @@ db();
 // routes middleware
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/questions", questionRouter);
+app.use("/api/v1/quiz", quizRouter)
 
 // connect server
 app.listen(PORT, () => {
