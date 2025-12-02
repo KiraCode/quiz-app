@@ -41,4 +41,4 @@ async function apiRequest(options) {
   return response;
 }
 
-export default apiResult;
+export default apiRequest;
