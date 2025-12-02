@@ -24,4 +24,21 @@ async function apiRequest(options) {
       `Bearer ${localStorage.getItem("accessToken")}`
     );
   }
+
+  // create a new URL object with the base URL from the environment variable and the endpoints
+  const baseUrl = import.meta.env.VITE_API_BASE_URL;
+  const url = new URL(endpoint, baseUrl);
+
+  // make a fetch request to the API endpoint with specific methods, headers and body
+
+  const response = await fetch(url, {
+    method,
+    headers,
+    body: requestBody,
+  });
+
+  // return the response from the API
+  return response;
 }
+
+export default apiResult;
