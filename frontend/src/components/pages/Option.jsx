@@ -15,26 +15,39 @@ const Option = ({
     }
   };
 
+  // Base style
   let baseStyle =
-    "btn justify-start w-full flex items-center gap-2 text-base font-medium transition-colors duration-300";
+    "w-full flex items-center justify-between p-4 rounded-xl border shadow-md transition-all duration-300 cursor-pointer text-left";
 
+  // States before submitting
   if (!isAnswered) {
-    baseStyle += " btn-outline"; // Before answering
-  } else {
+    baseStyle +=
+      " bg-base-100 border-base-300 hover:border-primary hover:bg-primary/10";
+    if (isSelected) {
+      baseStyle += " border-primary bg-primary/15";
+    }
+  }
+
+  // After answer submitted
+  if (isAnswered) {
     if (isCorrect) {
-      baseStyle += " bg-green-500 text-white hover:bg-green-600"; // Correct
+      baseStyle +=
+        " bg-green-500 border-green-600 text-white shadow-green-300 hover:bg-green-600";
     } else if (isWrong) {
-      baseStyle += " bg-red-500 text-white hover:bg-red-600"; // Wrong
+      baseStyle +=
+        " bg-red-500 border-red-600 text-white shadow-red-300 hover:bg-red-600";
     } else {
-      baseStyle += " btn-outline"; // Other unselected
+      baseStyle += " bg-base-200 border-base-300 text-base-content/70";
     }
   }
 
   return (
-    <button className={baseStyle} onClick={handleClick}>
-      <span>{option.value}</span>
+    <button className={baseStyle} onClick={handleClick} disabled={isAnswered}>
+      <span className="font-medium">{option.value}</span>
+
+      {/* Spinner */}
       {isValidating && (
-        <span className="loading loading-spinner loading-xs ml-2"></span>
+        <span className="loading loading-spinner loading-sm ml-2"></span>
       )}
     </button>
   );
