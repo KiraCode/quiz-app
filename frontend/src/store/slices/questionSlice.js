@@ -3,7 +3,7 @@ import {
   fetchQuestionsAPI,
   submitQuizAPI,
   validateAnswerAPI,
-} from "../thunks/questionsThunks.js";
+} from "../thunk/questionsThunk.js";
 
 const initialState = {
   questions: [], //list of all the quiz questions
