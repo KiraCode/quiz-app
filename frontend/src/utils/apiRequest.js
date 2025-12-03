@@ -1,5 +1,4 @@
 async function apiRequest(options) {
-  // destructure the options object to get the endpoint, method, include auth and body
   const {
     endpoint,
     method = "GET",
@@ -7,17 +6,19 @@ async function apiRequest(options) {
     body = undefined,
   } = options;
 
-  //   create a new header object
+  //Create a new Headers Object
   const headers = new Headers();
 
-  //   if the body is an object, set the "Content-Type" header to application/json and stringify the body
+  //if the body is an object,set the "content-type" header to "application/json" and stringyfy the body
+
   let requestBody = body;
   if (body && typeof body === "object") {
-    headers.append("COntent-type", "application/json");
-    requestBody = JSON.stringify(requestBody);
+    headers.append("Content-Type", "application/json");
+    requestBody = JSON.stringify(body);
   }
 
-  //   if includeAuth is true and there is an access token in localStorage, append in "Authorization header with access token"
+  //if includeAuth is true and there is an access token in localStorage,append in "authorization header with access token"
+
   if (includeAuth && localStorage.getItem("accessToken")) {
     headers.append(
       "Authorization",
@@ -25,20 +26,15 @@ async function apiRequest(options) {
     );
   }
 
-  // create a new URL object with the base URL from the environment variable and the endpoints
+  //Create a new Url object with the base url from the environment variables and the endpoints
+
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const url = new URL(endpoint, baseUrl);
 
-  // make a fetch request to the API endpoint with specific methods, headers and body
+  //make a fetch request to the api endpoint with specific methods ,headers and body
 
-  const response = await fetch(url, {
-    method,
-    headers,
-    body: requestBody,
-  });
-
-  // return the response from the API
+  const response = await fetch(url, { method, headers, body: requestBody });
+  //return the response from the api
   return response;
 }
-
 export default apiRequest;

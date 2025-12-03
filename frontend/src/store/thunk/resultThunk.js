@@ -11,6 +11,7 @@ export const fetchCompleteQuizApi = createAsyncThunk(
     try {
       const response = await apiRequest({ endpoint: COMPLETED_QUIZ_ENDPOINT });
       const jsonData = await response.json();
+      
       if (response.ok) {
         return jsonData;
       } else {

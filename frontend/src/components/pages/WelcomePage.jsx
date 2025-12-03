@@ -1,7 +1,7 @@
 import React from "react";
 import { LogOut, CheckCircle2, HelpCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const WelcomePage = () => {
   return (

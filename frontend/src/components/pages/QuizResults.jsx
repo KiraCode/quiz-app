@@ -5,10 +5,10 @@ import { useDispatch } from "react-redux";
 import {
   fetchCompleteQuizApi,
   fetchAttemptsAPI,
-} from "../../store/thunks/resultThunk";
+} from "../../store/thunk/resultThunk.js";
 import useResultState from "../../hooks/useResultState";
 import { routes } from "../../App";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const QuizResults = () => {
   const dispatch = useDispatch();

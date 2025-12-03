@@ -7,14 +7,14 @@ import {
   fetchQuestionsAPI,
   submitQuizAPI,
   validateAnswerAPI,
-} from "../../store/thunks/questionsThunks";
+} from "../../store/thunk/questionsThunk.js";
 import Option from "../../components/pages/Option";
 import { activeNextQuestion } from "../../store/slices/QuestionSlice.js";
 import {
   fetchAttemptsAPI,
   fetchCompleteQuizApi,
 } from "../../store/thunk/resultThunk.js";
-import Footer from "./footer";
+import Footer from "./Footer";
 
 const QuestionPage = () => {
   const [userSelectedOption, setUserSelectedOption] = useState(null);
@@ -53,7 +53,7 @@ const QuestionPage = () => {
         await dispatch(
           validateAnswerAPI({
             questionId: activeQuestionId,
-            answer: selectedOption,
+            answer: selectedOption
           })
         ).unwrap();
       } catch (error) {
@@ -69,7 +69,7 @@ const QuestionPage = () => {
 
   const moveForward = useCallback(() => {
     if (isFinalQuestion) {
-      dispatch(submitQuizAPI());
+      dispatch(submitQuizAPI({}));
       setTimeout(() => {
         dispatch(fetchCompleteQuizApi());
         dispatch(fetchAttemptsAPI());

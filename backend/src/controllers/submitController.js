@@ -75,7 +75,6 @@ const completedQuizQuestions = async (req, res) => {
       user_id: req.user._id,
       quiz_status: QUIZ_STATUS_COMPLETED,
     }).sort({ createdAt: -1 });
-console.log( req.user._id);
 
     // create two arrays for showing what questions we selected wrong, what is there correct answer
     let incorrect_questions = [];

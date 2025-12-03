@@ -31,12 +31,12 @@ export const fetchQuestionsAPI = createAsyncThunk(
 
 export const validateAnswerAPI = createAsyncThunk(
   "questions/validateAnswer",
-  async (value, thunkAPI) => {
+  async ({ questionId, answer }, thunkAPI) => {
     try {
       const response = await apiRequest({
         endpoint: VALIDATE_ANSWERS_ENDPOINT,
         method: "POST",
-        body: value,
+        body: { questionId, answer },
       });
       const resJson = await response.json();
       if (response.ok) {

@@ -15,7 +15,7 @@ import { Toaster } from "react-hot-toast";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import QuestionPage from "./components/pages/QuestionPage";
 import Logout from "./components/pages/Logout";
-import ResultPage from "./components/pages/ResultPage";
+import QuizResults from "./components/pages/QuizResults";
 
 export const routes = {
   signup: "/signup",
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
   },
   {
     path: routes.protectedRoutes.result,
-    element: <ProtectedRoutes element={<ResultPage />} />,
+    element: <ProtectedRoutes element={<QuizResults />} />,
   },
 ]);
 

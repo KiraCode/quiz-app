@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { signupAPI } from "../../store/thunks/authThunks";
+import { signupAPI } from "../../store/thunk/authThunk.js";
 import toast from "react-hot-toast";
-import useAuthState from "../../hooks/useAuthSlice";
+import useAuthState from "../../hooks/useAuthState";
 import { routes } from "../../App";
 
 const Signup = () => {

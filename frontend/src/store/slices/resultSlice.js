@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchAttemptsAPI, fetchCompleteQuizApi } from "../thunks/resultThunk";
+import { fetchAttemptsAPI, fetchCompleteQuizApi } from "../thunk/resultThunk.js";
 
 const initialState = {
   status: false,
