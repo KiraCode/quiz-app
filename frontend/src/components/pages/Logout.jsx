@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { logoutUser } from "../../store/thunks/authThunks";
+import { logoutUser } from "../../store/thunk/authThunk.js";
 import { useDispatch } from "react-redux";
-import useAuthState from "../../hooks/useAuthSlice";
+import useAuthState from "../../hooks/useAuthState";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../../App";
 
