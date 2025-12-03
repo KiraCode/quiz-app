@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginAPI, logoutUser, signupAPI } from "../thunks/authThunks";
+import { loginAPI, logoutUser, signupAPI } from "../thunk/authThunk.js";
 
 const initialState = {
   isAuthenticated: Boolean(localStorage.getItem("accessToken")?.trim()),
