@@ -9,7 +9,7 @@ import {
   validateAnswerAPI,
 } from "../../store/thunk/questionsThunk.js";
 import Option from "../../components/pages/Option";
-import { activeNextQuestion } from "../../store/slices/QuestionSlice.js";
+import { activeNextQuestion } from "../../store/slices/questionSlice.js";
 import {
   fetchAttemptsAPI,
   fetchCompleteQuizApi,
