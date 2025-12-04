@@ -1,4 +1,4 @@
-const MAX_QUESTION_COUNT = 30;
+const MAX_QUESTION_COUNT = 10;
 const {
   UserQuiz: UserQuizModel,
   QUIZ_STATUS_PENDING,
@@ -68,7 +68,7 @@ const getQuestions = async (req, res) => {
     });
   } catch (error) {
     console.error(error.message);
-    res.status(400).send("Something went rong while fetching the Question");
+    res.status(400).send("Something went Wrong while fetching the Question");
   }
 };
 
@@ -105,11 +105,11 @@ const validateAnswer = async (req, res) => {
       },
       {
         $set: {
-          "questions.$.atempted": true,
+          "questions.$.attempted": true,
           "questions.$.answer_status": answerStatus
             ? ANSWER_STATUS_RIGHT
             : ANSWER_STATUS_WRONG,
-          "questions.&.submitted_answer": answer,
+          "questions.$.submitted_answer": answer,
         },
       },
       { new: true } // to return the updated document which we are not using as of now
