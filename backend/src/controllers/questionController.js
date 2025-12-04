@@ -1,4 +1,4 @@
-const MAX_QUESTION_COUNT = 15;
+const MAX_QUESTION_COUNT = 10;
 const {
   UserQuiz: UserQuizModel,
   QUIZ_STATUS_PENDING,
@@ -68,7 +68,7 @@ const getQuestions = async (req, res) => {
     });
   } catch (error) {
     console.error(error.message);
-    res.status(400).send("Something went rong while fetching the Question");
+    res.status(400).send("Something went Wrong while fetching the Question");
   }
 };
 
